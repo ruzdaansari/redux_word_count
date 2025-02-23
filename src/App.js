@@ -1,24 +1,39 @@
-import logo from './logo.svg';
+
 import './App.css';
+import { useSelector,useDispatch } from 'react-redux';
+import store, { counterSlice } from './store/index';
+// const { increment, decrement, toggle } = counterSlice.actions;
+import { counterActions } from './store/index';
 
 function App() {
+  const counter = useSelector(state=> state.counter)
+  const show = useSelector(state=> state.showCounter)
+  const dispatch = useDispatch();
+
+
+const incrementHandler = ()=>{
+  dispatch(counterActions.increment())
+
+}
+
+const decrementHandler = ()=>{
+  dispatch(counterActions.decrement())
+
+
+}
+
+  const toggleCounterHandler = () =>{
+    dispatch(counterActions.toggle())
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main className="counter">
+      <h1>Redux Counter</h1>
+     {show && <div className="value">{counter}</div>}
+      <button onClick={incrementHandler}>Increase</button>
+      <button onClick={decrementHandler}>Decrease</button>
+
+      <button onClick={toggleCounterHandler}>Toggle Counter</button>
+    </main>
   );
 }
 
